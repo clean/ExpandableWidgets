@@ -47,7 +47,6 @@ class ExpandableShowcase extends StatelessWidget {
             ExpandableText(
               elevation: 5,
               padding: EdgeInsets.all(10.0),
-              animationDuration: Duration(milliseconds: 500),
               textWidget: Text(
                 data,
                 maxLines: 3,
@@ -62,18 +61,17 @@ class ExpandableShowcase extends StatelessWidget {
             SizedBox(height: 20),
 
             /// Extended example
-            Expandable.extended(
+            Expandable(
               elevation: 10,
-              isClickable: false,
-              initiallyExpanded: true,
+              isClickable: true,
+              padding: EdgeInsets.zero,
               centralizePrimaryWidget: true,
-              centralizeAdditionalWidget: true,
               primaryWidget: Container(
-                height: 30,
+                padding: const EdgeInsets.only(top: 10),
                 child: Center(child: Text('Important Summary')),
               ),
               secondaryWidget: Container(
-                height: 70,
+                padding: const EdgeInsets.all(10),
                 child: Center(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -89,71 +87,11 @@ class ExpandableShowcase extends StatelessWidget {
               arrowWidget: Icon(
                 Icons.keyboard_arrow_up_rounded,
                 color: Colors.blueGrey,
-                size: 20.0,
+                size: 50.0,
               ),
-              additionalWidget: Text('Show me'),
-              arrowLocation: ArrowLocation.left,
-            ),
-            SizedBox(height: 20),
-
-            /// Example with background image
-            Expandable(
-              primaryWidget: Text('centralizePrimaryWidget: true'),
-              secondaryWidget: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  Container(width: 30, height: 10, color: Colors.black),
-                  Container(width: 30, height: 10, color: Colors.black),
-                  Container(width: 30, height: 10, color: Colors.black),
-                ],
-              ),
-              isClickable: false,
               showArrowIcon: true,
-              backgroundImage: DecorationImage(
-                image: AssetImage('assets/background.png'),
-                repeat: ImageRepeat.repeatX,
-              ),
-              backgroundColor: Colors.grey.withOpacity(0.3),
-              arrowWidget: Icon(
-                Icons.arrow_upward_rounded,
-                color: Colors.blueGrey,
-                size: 20.0,
-              ),
-              animationDuration: Duration(seconds: 1),
-              centralizePrimaryWidget: true,
+              arrowLocation: ArrowLocation.bottom,
             ),
-
-            SizedBox(height: 20),
-
-            /// Example without centralizePrimaryWidget
-            Expandable(
-              primaryWidget: Text('centralizePrimaryWidget: false'),
-              secondaryWidget: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  Container(width: 30, height: 10, color: Colors.black),
-                  Container(width: 30, height: 10, color: Colors.black),
-                  Container(width: 30, height: 10, color: Colors.black),
-                ],
-              ),
-              isClickable: false,
-              showArrowIcon: true,
-              backgroundImage: DecorationImage(
-                image: AssetImage('assets/background.png'),
-                repeat: ImageRepeat.repeatX,
-              ),
-              backgroundColor: Colors.grey.withOpacity(0.3),
-              arrowWidget: Icon(
-                Icons.arrow_upward_rounded,
-                color: Colors.blueGrey,
-                size: 20.0,
-              ),
-              animationDuration: Duration(seconds: 1),
-              centralizePrimaryWidget: false,
-            ),
-            SizedBox(height: 10),
           ],
         ),
       ),

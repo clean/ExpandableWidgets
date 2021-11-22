@@ -156,7 +156,7 @@ class _ExpandableTextWidgetState extends State<ExpandableTextWidget>
       child: Material(
         color: widget.backgroundColor ?? Colors.white,
         elevation: widget.elevation ?? 0,
-        shape: widget.shape ?? defaultShapeBorder,
+        shape: widget.shape ?? null,
         clipBehavior: Clip.antiAlias,
         child: InkWell(
           hoverColor: Colors.transparent,
@@ -209,21 +209,14 @@ class _ExpandableTextWidgetState extends State<ExpandableTextWidget>
                                   ArrowLocation.bottom)
                                 finalText,
                               Padding(
-                                padding: widget.finalArrowLocation ==
-                                        ArrowLocation.top
-                                    ? EdgeInsets.only(
-                                        bottom: widget.padding!.top)
-                                    : EdgeInsets.only(
-                                        top: widget.padding!.bottom),
+                                padding: EdgeInsets.only(
+                                    top: widget.padding!.bottom),
                                 child: Icon(
                                   Icons.keyboard_arrow_up_rounded,
                                   color: Colors.black,
                                   size: 25.0,
                                 ),
                               ),
-                              if (widget.finalArrowLocation ==
-                                  ArrowLocation.top)
-                                finalText,
                             ],
                           ),
                     secondChild: (widget.arrowLocation == ArrowLocation.left ||
@@ -255,20 +248,14 @@ class _ExpandableTextWidgetState extends State<ExpandableTextWidget>
                               if (widget.arrowLocation == ArrowLocation.bottom)
                                 widget.textWidget!,
                               Padding(
-                                padding:
-                                    widget.arrowLocation == ArrowLocation.top
-                                        ? EdgeInsets.only(
-                                            bottom: widget.padding!.top)
-                                        : EdgeInsets.only(
-                                            top: widget.padding!.bottom),
+                                padding: EdgeInsets.only(
+                                    top: widget.padding!.bottom),
                                 child: Icon(
                                   Icons.keyboard_arrow_down_rounded,
                                   color: Colors.black,
                                   size: 25.0,
                                 ),
                               ),
-                              if (widget.arrowLocation == ArrowLocation.top)
-                                widget.textWidget!,
                             ],
                           ),
                   )

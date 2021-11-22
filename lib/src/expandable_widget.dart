@@ -8,7 +8,6 @@ abstract class ExpandableWidget extends StatefulWidget {
   ExpandableWidget({
     this.primaryWidget,
     this.secondaryWidget,
-    this.additionalWidget,
     this.onPressed,
     this.padding,
     this.backgroundColor,
@@ -16,7 +15,6 @@ abstract class ExpandableWidget extends StatefulWidget {
     this.shape,
     this.animationDuration,
     this.beforeAnimationDuration,
-    this.backgroundImage,
     this.showArrowIcon,
     this.initiallyExpanded,
     this.hoverOn,
@@ -32,11 +30,6 @@ abstract class ExpandableWidget extends StatefulWidget {
 
   /// • The widget that [sizeTransition] affects.
   final Widget? secondaryWidget;
-
-  /// • Used for [ExpandableWidget.extended].
-  ///
-  /// • Brings an arrow widget which is next to it.
-  final Widget? additionalWidget;
 
   /// • Function that is placed top of the widget tree.
   ///
@@ -64,9 +57,6 @@ abstract class ExpandableWidget extends StatefulWidget {
 
   /// • Duration between [onPressed] & expand animation.
   final Duration? beforeAnimationDuration;
-
-  /// • Background image of the expandable.
-  final DecorationImage? backgroundImage;
 
   /// • Icon that changes its direction with respect to expand animation.
   final bool? showArrowIcon;
@@ -204,7 +194,7 @@ class _ExpandableWidgetState extends State<ExpandableWidget>
       child: Material(
         color: widget.backgroundColor ?? Colors.white,
         elevation: widget.elevation ?? 0,
-        shape: widget.shape ?? defaultShapeBorder,
+        shape: widget.shape ?? null,
         clipBehavior: Clip.antiAlias,
         child: InkWell(
           mouseCursor: widget.isClickable!
@@ -236,67 +226,39 @@ class _ExpandableWidgetState extends State<ExpandableWidget>
               });
           },
           child: Container(
-            decoration: BoxDecoration(image: widget.backgroundImage ?? null),
             child: Padding(
-              padding: widget.padding ?? EdgeInsets.all(20.0),
+              padding: widget.padding ?? EdgeInsets.zero,
               child: Column(
                 children: [
                   widget.showArrowIcon == true
-                      ? Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          textDirection:
-                              widget.arrowLocation == ArrowLocation.right
-                                  ? TextDirection.ltr
-                                  : TextDirection.rtl,
-                          children: [
-                            if (widget.centralizePrimaryWidget! &&
-                                widget.arrowWidget == null)
-                              holderIcon
-                            else if (widget.centralizePrimaryWidget! &&
-                                widget.arrowWidget != null)
-                              Opacity(opacity: 0, child: widget.arrowWidget!),
-                            widget.primaryWidget!,
-                            defaultRotation,
-                          ],
-                        )
-                      : widget.additionalWidget != null
+                      ? (widget.arrowLocation == ArrowLocation.left ||
+                              widget.arrowLocation == ArrowLocation.right)
                           ? Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              textDirection:
+                                  widget.arrowLocation == ArrowLocation.right
+                                      ? TextDirection.ltr
+                                      : TextDirection.rtl,
                               children: [
-                                Column(
-                                  children: [
-                                    widget.primaryWidget!,
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
-                                      textDirection: widget.arrowLocation ==
-                                              ArrowLocation.right
-                                          ? TextDirection.ltr
-                                          : TextDirection.rtl,
-                                      children: [
-                                        if (widget
-                                                .centralizeAdditionalWidget! &&
-                                            widget.arrowWidget == null)
-                                          holderIcon
-                                        else if (widget
-                                                .centralizePrimaryWidget! &&
-                                            widget.arrowWidget != null)
-                                          Opacity(
-                                            opacity: 0,
-                                            child: widget.arrowWidget!,
-                                          ),
-                                        widget.additionalWidget!,
-                                        RotatedBox(
-                                          quarterTurns: 2,
-                                          child: defaultRotation,
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                )
+                                if (widget.centralizePrimaryWidget! &&
+                                    widget.arrowWidget == null)
+                                  holderIcon,
+                                widget.primaryWidget!,
+                                defaultRotation,
                               ],
                             )
-                          : widget.primaryWidget!,
+                          : Column(
+                              mainAxisSize: MainAxisSize.min,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                if (widget.centralizePrimaryWidget! &&
+                                    widget.arrowWidget == null)
+                                  holderIcon,
+                                widget.primaryWidget!,
+                                defaultRotation,
+                              ],
+                            )
+                      : widget.primaryWidget!,
                   SizeTransition(
                     axisAlignment: 0.0,
                     sizeFactor: _sizeAnimation,

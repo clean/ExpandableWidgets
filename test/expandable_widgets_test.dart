@@ -43,40 +43,6 @@ void main() {
       );
 
       await test.pumpWidget(
-        Expandable.extended(
-          elevation: 10,
-          initiallyExpanded: true,
-          centralizePrimaryWidget: true,
-          centralizeAdditionalWidget: true,
-          primaryWidget: Container(
-            height: 30,
-            child: Center(child: Text('Important Summary')),
-          ),
-          secondaryWidget: Container(
-            child: Center(
-              child: Column(
-                children: [
-                  Text('More'),
-                  Text('Details'),
-                  Text('About'),
-                  Text('Something'),
-                ],
-              ),
-            ),
-          ),
-          additionalWidget: Text('Show me details'),
-        ),
-      );
-
-      await test.pumpWidget(
-        Expandable.extended(
-          primaryWidget: Text('hello world!'),
-          secondaryWidget: Text('STILL D.R.E'),
-          backGroundColor: Colors.orange,
-        ),
-      );
-
-      await test.pumpWidget(
         Expandable(
           primaryWidget: Container(height: 10),
           secondaryWidget: Container(height: 20),
