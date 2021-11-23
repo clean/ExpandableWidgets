@@ -19,7 +19,9 @@ abstract class ExpandableWidget extends StatefulWidget {
     this.initiallyExpanded,
     this.hoverOn,
     this.centralizePrimaryWidget,
-    this.arrowWidget,
+    this.arrowColor,
+    this.arrowSize,
+    this.arrowIcon,
     this.centralizeAdditionalWidget,
     this.isClickable,
     this.arrowLocation,
@@ -61,6 +63,15 @@ abstract class ExpandableWidget extends StatefulWidget {
   /// • Icon that changes its direction with respect to expand animation.
   final bool? showArrowIcon;
 
+  /// • Color of the icon that changes its direction with respect to expand animation.
+  final Color? arrowColor;
+
+  /// • Color of the icon that changes its direction with respect to expand animation.
+  final double? arrowSize;
+
+  /// • Icon of the pointer that changes its direction with respect to expand animation.
+  final IconData? arrowIcon;
+
   /// • Whether this expandable widget will be expanded or collapsed at first.
   final bool? initiallyExpanded;
 
@@ -77,9 +88,6 @@ abstract class ExpandableWidget extends StatefulWidget {
 
   /// • Decide whether this widget will be clickable everywhere or clickable only at [arrowWidget].
   final bool? isClickable;
-
-  /// • Custom arrow widget.
-  final Widget? arrowWidget;
 
   /// • Place of the arrow widget.
   final ArrowLocation? arrowLocation;
@@ -170,21 +178,8 @@ class _ExpandableWidgetState extends State<ExpandableWidget>
   @override
   Widget build(BuildContext context) {
     RotationTransition defaultRotation = RotationTransition(
-      turns: Tween(begin: 0.0, end: 1.0).animate(_rotationController),
-      child: widget.isClickable!
-          ? widget.arrowWidget ?? defaultIcon
-          : GestureDetector(
-              child: widget.arrowWidget!,
-              onTap: () {
-                Timer(
-                    widget.beforeAnimationDuration ??
-                        Duration(milliseconds: 20), () {
-                  _toggleExpand();
-                  _toggleRotate();
-                });
-              },
-            ),
-    );
+        turns: Tween(begin: 0.0, end: 1.0).animate(_rotationController),
+        child: _holderIcon(widget.arrowColor));
     if (initiallyExpanded == true) {
       _toggleExpand();
       initiallyExpanded = false;
@@ -240,9 +235,8 @@ class _ExpandableWidgetState extends State<ExpandableWidget>
                                       ? TextDirection.ltr
                                       : TextDirection.rtl,
                               children: [
-                                if (widget.centralizePrimaryWidget! &&
-                                    widget.arrowWidget == null)
-                                  holderIcon,
+                                if (widget.centralizePrimaryWidget!)
+                                  _holderIcon(Colors.transparent),
                                 widget.primaryWidget!,
                                 defaultRotation,
                               ],
@@ -251,9 +245,6 @@ class _ExpandableWidgetState extends State<ExpandableWidget>
                               mainAxisSize: MainAxisSize.min,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                if (widget.centralizePrimaryWidget! &&
-                                    widget.arrowWidget == null)
-                                  holderIcon,
                                 widget.primaryWidget!,
                                 defaultRotation,
                               ],
@@ -270,6 +261,14 @@ class _ExpandableWidgetState extends State<ExpandableWidget>
           ),
         ),
       ),
+    );
+  }
+
+  Widget _holderIcon(Color? color) {
+    return Icon(
+      widget.arrowIcon ?? Icons.keyboard_arrow_up_rounded,
+      color: color,
+      size: widget.arrowSize,
     );
   }
 }

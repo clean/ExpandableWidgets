@@ -47,10 +47,6 @@ void main() {
           primaryWidget: Container(height: 10),
           secondaryWidget: Container(height: 20),
           showArrowIcon: true,
-          backgroundImage: DecorationImage(
-            image: AssetImage('assets/background.png'),
-            repeat: ImageRepeat.repeatX,
-          ),
           backgroundColor: Colors.transparent,
         ),
       );

@@ -12,11 +12,12 @@ abstract class ExpandableTextWidget extends StatefulWidget {
     this.shape,
     this.animationDuration,
     this.beforeAnimationDuration,
-    this.backgroundImage,
     this.initiallyExpanded,
     this.hoverOn,
-    this.arrowWidget,
     this.showArrowIcon,
+    this.arrowColor,
+    this.arrowSize,
+    this.arrowIcon,
     this.textDirection,
     this.arrowLocation,
     this.finalArrowLocation,
@@ -52,11 +53,17 @@ abstract class ExpandableTextWidget extends StatefulWidget {
   /// • Duration between [onPressed] & expand animation.
   final Duration? beforeAnimationDuration;
 
-  /// • Background image of the expandable.
-  final DecorationImage? backgroundImage;
-
   /// • Icon that changes its direction with respect to expand animation.
   final bool? showArrowIcon;
+
+  /// • Color of the icon that changes its direction with respect to expand animation.
+  final Color? arrowColor;
+
+  /// • Color of the icon that changes its direction with respect to expand animation.
+  final double? arrowSize;
+
+  /// • Icon of the pointer that changes its direction with respect to expand animation.
+  final IconData? arrowIcon;
 
   /// • Whether this expandable widget will be expanded or collapsed at first.
   final bool? initiallyExpanded;
@@ -74,9 +81,6 @@ abstract class ExpandableTextWidget extends StatefulWidget {
   ///
   /// • See [ExpandableTextWidget] & [TextDirection] for more info.
   final TextDirection? textDirection;
-
-  /// • Custom arrow widget.
-  final Widget? arrowWidget;
 
   /// • Place of the arrow widget when this expandable is collapsed.
   final ArrowLocation? arrowLocation;
@@ -170,7 +174,6 @@ class _ExpandableTextWidgetState extends State<ExpandableTextWidget>
                 () => _toggleExpand());
           },
           child: Container(
-            decoration: BoxDecoration(image: widget.backgroundImage ?? null),
             padding: widget.padding ?? EdgeInsets.all(20.0),
             child: widget.showArrowIcon!
                 ? AnimatedCrossFade(
@@ -235,11 +238,7 @@ class _ExpandableTextWidgetState extends State<ExpandableTextWidget>
                                             right: widget.padding!.right)
                                         : EdgeInsets.only(
                                             left: widget.padding!.left),
-                                child: Icon(
-                                  Icons.keyboard_arrow_down_rounded,
-                                  color: Colors.black,
-                                  size: 25.0,
-                                ),
+                                child: _holderIcon(widget.arrowColor),
                               ),
                             ],
                           )
@@ -250,11 +249,7 @@ class _ExpandableTextWidgetState extends State<ExpandableTextWidget>
                               Padding(
                                 padding: EdgeInsets.only(
                                     top: widget.padding!.bottom),
-                                child: Icon(
-                                  Icons.keyboard_arrow_down_rounded,
-                                  color: Colors.black,
-                                  size: 25.0,
-                                ),
+                                child: _holderIcon(widget.arrowColor),
                               ),
                             ],
                           ),
@@ -283,6 +278,14 @@ class _ExpandableTextWidgetState extends State<ExpandableTextWidget>
           ),
         ),
       ),
+    );
+  }
+
+  Widget _holderIcon(Color? color) {
+    return Icon(
+      widget.arrowIcon ?? Icons.keyboard_arrow_down_rounded,
+      color: color,
+      size: widget.arrowSize,
     );
   }
 }
