@@ -200,7 +200,7 @@ class _ExpandableTextWidgetState extends State<ExpandableTextWidget>
                                             left: widget.padding!.left),
                                 child: Icon(
                                   Icons.keyboard_arrow_up_rounded,
-                                  color: Colors.black,
+                                  color: widget.arrowColor,
                                   size: 25.0,
                                 ),
                               ),
@@ -216,7 +216,7 @@ class _ExpandableTextWidgetState extends State<ExpandableTextWidget>
                                     top: widget.padding!.bottom),
                                 child: Icon(
                                   Icons.keyboard_arrow_up_rounded,
-                                  color: Colors.black,
+                                  color: widget.arrowColor,
                                   size: 25.0,
                                 ),
                               ),

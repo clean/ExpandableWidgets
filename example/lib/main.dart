@@ -58,6 +58,7 @@ class ExpandableShowcase extends StatelessWidget {
               hoverOn: false,
               arrowLocation: ArrowLocation.right,
               arrowSize: 40,
+              arrowColor: Colors.red,
               finalArrowLocation: ArrowLocation.bottom,
             ),
             SizedBox(height: 20),
@@ -68,6 +69,7 @@ class ExpandableShowcase extends StatelessWidget {
               isClickable: true,
               padding: EdgeInsets.zero,
               centralizePrimaryWidget: true,
+              arrowColor: Colors.green,
               primaryWidget: Container(
                 padding: const EdgeInsets.only(top: 10),
                 child: Center(child: Text('Important Summary')),
