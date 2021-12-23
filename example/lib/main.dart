@@ -67,6 +67,7 @@ class ExpandableShowcase extends StatelessWidget {
             Expandable(
               elevation: 10,
               isClickable: true,
+              initiallyExpanded: true,
               padding: EdgeInsets.zero,
               centralizePrimaryWidget: true,
               arrowColor: Colors.green,
